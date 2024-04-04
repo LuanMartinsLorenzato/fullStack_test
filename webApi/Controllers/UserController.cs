@@ -16,7 +16,6 @@ namespace webApi.Controllers
         {
             return [
                 new User{ Name = "Luan" },
-                new User{ Name = "Marcos" }
             ];
         }
         [HttpGet]

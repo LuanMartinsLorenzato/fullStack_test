@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\webApi.csproj": {}
+    "c:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\webApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\webApi.csproj": {
+    "c:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\webApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\webApi.csproj",
+        "projectUniqueName": "c:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\webApi.csproj",
         "projectName": "webApi",
-        "projectPath": "C:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\webApi.csproj",
+        "projectPath": "c:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\webApi.csproj",
         "packagesPath": "C:\\Users\\luanl\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\obj\\",
+        "outputPath": "c:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\luanl\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -44,6 +44,26 @@
           "targetAlias": "net8.0",
           "dependencies": {
             "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.3, )"
             },
