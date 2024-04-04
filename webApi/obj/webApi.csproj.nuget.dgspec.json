@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\webApi.csproj": {}
+    "c:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\webApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\webApi.csproj": {
+    "c:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\webApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\webApi.csproj",
+        "projectUniqueName": "c:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\webApi.csproj",
         "projectName": "webApi",
-        "projectPath": "C:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\webApi.csproj",
+        "projectPath": "c:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\webApi.csproj",
         "packagesPath": "C:\\Users\\luanl\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\obj\\",
+        "outputPath": "c:\\Users\\luanl\\OneDrive\\Área de Trabalho\\fullStack_test\\webApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\luanl\\AppData\\Roaming\\NuGet\\NuGet.Config"
