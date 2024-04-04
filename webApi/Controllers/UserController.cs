@@ -1,6 +1,8 @@
 // using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using webApi.Models;
+using webApi.Repository;
 
 namespace webApi.Controllers
 {
@@ -10,26 +12,63 @@ namespace webApi.Controllers
     // Define a rota de acesso ao controlador onde [controller] é um token que será substituído pelo nome do controlador.
     [Route("api/[controller]")]
     // Herdar de ControllerBase proporciona ao UserController acesso a muitos métodos e propriedades úteis para o tratamento de requisições HTTP.
-    public class UserController : ControllerBase
+    public class UserController(IUserRepository repository) : ControllerBase
     {
-        private static List<User> Users()
-        {
-            return [
-                new User{ Name = "Luan" },
-            ];
-        }
+        // Chama o repositório para utilizar seus métodos
+        private readonly IUserRepository _repository = repository;
+
+
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(Users());
+            var usersDB = await _repository.SearchUsers();
+            return usersDB.Any() ? Ok(usersDB) : NoContent();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            var userDB = await _repository.SearchUser(id);
+            return userDB != null
+            ? Ok(userDB)
+            : NotFound("Usuário não encontrado");
         }
 
         [HttpPost]
-        public IActionResult Post(User user)
+        public async Task<IActionResult> Post(User user)
         {
-            var users = Users();
-            users.Add(user);
-            return Ok(users);
+            _repository.AddUser(user);
+            return await _repository.SaveChangeAsync()
+            ? Ok("Usuário adicionado com sucesso")
+            : BadRequest("Erro ao salvar o usuário");
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(Guid id, User user)
+        {
+            var userDB = await _repository.SearchUser(id);
+            if (userDB == null) return NotFound("Usuário não encontrado");
+
+            userDB.Name = user.Name ?? userDB.Name;
+
+            _repository.UpdateUser(userDB);
+
+            return await _repository.SaveChangeAsync()
+            ? Ok("Usuário atualizado com sucesso")
+            : BadRequest("Erro ao atualizar o usuário");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var userDB = await _repository.SearchUser(id);
+            if (userDB == null) return NotFound("Usuário não encontrado");
+
+            _repository.DeleteUser(userDB);
+
+            return await _repository.SaveChangeAsync()
+            ? Ok("Usuário deletado com sucesso")
+            : BadRequest("Erro ao deletar o usuário");
         }
     }
 }
