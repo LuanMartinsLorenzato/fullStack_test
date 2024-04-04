@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using user.Data;
-using webApi.Models;
+using webApi.Domain.Entities;
 
-namespace webApi.Repository
+namespace webApi.Domain.Repository
 {
     public class UserRepository(UserDBContext context) : IUserRepository
     {

@@ -1,6 +1,6 @@
-using webApi.Models;
+using webApi.Domain.Entities;
 
-namespace webApi.Repository
+namespace webApi.Domain.Repository
 {
     public interface IUserRepository
     {

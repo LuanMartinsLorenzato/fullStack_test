@@ -3,8 +3,8 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using user.Data;
-using webApi.Models;
-using webApi.Repository;
+using webApi.Domain.Entities;
+using webApi.Domain.Repository;
 [assembly: ApiController]
 var builder = WebApplication.CreateBuilder(args);
 

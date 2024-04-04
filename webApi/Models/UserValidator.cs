@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace webApi.Models
+namespace webApi.Domain.Entities
 {
     public class UserValidator : AbstractValidator<User>
     {

@@ -1,8 +1,7 @@
 // using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using webApi.Models;
-using webApi.Repository;
+using webApi.Domain.Entities;
+using webApi.Domain.Repository;
 
 namespace webApi.Controllers
 {
