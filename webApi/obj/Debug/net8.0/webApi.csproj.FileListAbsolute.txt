@@ -31,3 +31,4 @@ c:\Users\luanl\OneDrive\Área de Trabalho\fullStack_test\webApi\obj\Debug\net8.0
 c:\Users\luanl\OneDrive\Área de Trabalho\fullStack_test\webApi\obj\Debug\net8.0\webApi.pdb
 c:\Users\luanl\OneDrive\Área de Trabalho\fullStack_test\webApi\obj\Debug\net8.0\webApi.genruntimeconfig.cache
 c:\Users\luanl\OneDrive\Área de Trabalho\fullStack_test\webApi\obj\Debug\net8.0\ref\webApi.dll
+c:\Users\luanl\OneDrive\Área de Trabalho\fullStack_test\webApi\obj\Debug\net8.0\webApi.sourcelink.json
