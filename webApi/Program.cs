@@ -1,6 +1,9 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using user.Data;
+using webApi.Models;
 using webApi.Repository;
 [assembly: ApiController]
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +14,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
+
+builder.Services.AddTransient<IValidator<User>, UserValidator>();
 
 builder.Services.AddDbContext<UserDBContext>(options =>
 {
