@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace webApi.Domain.Entities
+namespace webApi.Models
 {
     public class UserValidator : AbstractValidator<User>
     {
@@ -8,7 +8,19 @@ namespace webApi.Domain.Entities
         {
             RuleFor(x => x.Name)
             .NotEmpty()
-            .WithMessage("Campo obrigatório");
+            .WithMessage("Campo obrigatório: Nome");
+
+            RuleFor(x => x.Email)
+            .NotEmpty()
+            .WithMessage("Campo obrigatório: Email");
+
+            RuleFor(x => x.Password)
+            .NotEmpty()
+            .WithMessage("Campo obrigatório: Senha");
+
+            RuleFor(x => x.Role)
+            .NotEmpty()
+            .WithMessage("Campo obrigatório: Role");
         }
 
     }

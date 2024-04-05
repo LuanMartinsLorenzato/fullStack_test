@@ -3,15 +3,52 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using user.Data;
-using webApi.Domain.Entities;
-using webApi.Domain.Repository;
+using webApi.Models;
+using webApi.Repository.Interfaces;
+using webApi.Repository;
+using webApi.Services.Interfaces;
+using webApi.Services;
+using Microsoft.OpenApi.Models;
 [assembly: ApiController]
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo()
+    {
+        Version = "v1.0",
+        Title = "test_webApi",
+        Description = "Web API"
+    });
+
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Cabeçalho de Autorização JWT utiliza o esquema de Bearer \r\n\r\n Digite 'Bearer' antes de colocar o token"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
@@ -25,6 +62,7 @@ builder.Services.AddDbContext<UserDBContext>(options =>
 });
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 var app = builder.Build();
 
