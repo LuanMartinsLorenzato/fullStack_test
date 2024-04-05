@@ -1,4 +1,4 @@
-namespace webApi.Dtos
+namespace webApi.Presentation.Dtos
 {
     public record LoginDto
     {

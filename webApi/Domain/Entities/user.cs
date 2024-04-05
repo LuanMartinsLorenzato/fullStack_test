@@ -1,6 +1,5 @@
-namespace webApi.Models
+namespace webApi.Domain.Entities
 {
-
     public class User
     {
         // Guid para dizer que a prop Id será um Guid.

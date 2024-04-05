@@ -1,13 +1,13 @@
-using webApi.Models;
+using webApi.Domain.Entities;
 
-namespace webApi.Repository.Interfaces
+namespace webApi.Domain.Interfaces
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<User>> SearchUsers();
-        Task<User> SearchUser(Guid id);
+        Task<IEnumerable<User>> GetUsersAsync();
+        Task<User> GetUserByIdAsync(Guid id);
         Task<User> GetUserByEmail(string email);
-        void AddUser(User user);
+        void CreateUser(User user);
         void UpdateUser(User user);
         void DeleteUser(User user);
         Task<bool> SaveChangeAsync();
