@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using user.Data;
-using webApi.Domain.Entities;
+using webApi.Models;
+using webApi.Repository.Interfaces;
 
-namespace webApi.Domain.Repository
+namespace webApi.Repository
 {
     public class UserRepository(UserDBContext context) : IUserRepository
     {
@@ -14,7 +15,14 @@ namespace webApi.Domain.Repository
         }
         public async Task<User> SearchUser(Guid id)
         {
-            return await _context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
+            // Corrigir implementação para retorno null, caso não ache o email ocorre erro 500 
+            var getUser = await _context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
+            // if (getUser == null)
+            // {
+            //     return null;
+            // }
+
+            return getUser;
         }
 
         public void AddUser(User user)
@@ -37,5 +45,15 @@ namespace webApi.Domain.Repository
             return await _context.SaveChangesAsync() > 0;
         }
 
+        public async Task<User> GetUserByEmail(string email)
+        {
+            // Corrigir implementação para retorno null, caso não ache o email ocorre erro 500 
+            var getUser = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            // if (getUser == null)
+            // {
+            //     return null;
+            // }
+            return getUser;
+        }
     }
 }

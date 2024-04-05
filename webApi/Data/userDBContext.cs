@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using webApi.Domain.Entities;
+using webApi.Models;
 
 namespace user.Data
 {
@@ -15,6 +15,10 @@ namespace user.Data
             user.HasKey(x => x.Id);
             user.Property(x => x.Id).HasColumnName("id").ValueGeneratedOnAdd();
             user.Property(x => x.Name).HasColumnName("name").IsRequired();
+            user.Property(x => x.Email).HasColumnName("email").IsRequired();
+            user.Property(x => x.Password).HasColumnName("password").IsRequired();
+            user.Property(x => x.Role).HasColumnName("role").IsRequired();
+            user.Property(x => x.Active).HasColumnName("active").IsRequired();
         }
     }
 }

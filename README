@@ -3,7 +3,6 @@
 # Comandos
 
 - docker-compose up -d
-- dotnet ef migrations add InitialCreate
 - dotnet ef database update
 
 ## Comandos para verificar as tabelas
@@ -11,6 +10,6 @@
 Listar containers rodando: docker ps
 Acessar o shell do container: docker exec -it webapi-postgres-1 bash
 Conectar ao banco de dados via psql: psql -U postgres -d my_test_db
-Listar tabelas no psql: \dt ou \dt _._ para todos os esquemas
+Listar tabelas no psql: \dt ou \dt *.* para todos os esquemas
 Sair do psql: \q
 Sair do shell do container: exit
