@@ -18,6 +18,7 @@ namespace user.Data
             user.Property(x => x.Email).HasColumnName("email").IsRequired();
             user.Property(x => x.Password).HasColumnName("password").IsRequired();
             user.Property(x => x.Role).HasColumnName("role").IsRequired();
+            user.Property(x => x.Active).HasColumnName("active").IsRequired();
         }
     }
 }

@@ -1,9 +1,10 @@
 using webApi.Dtos;
+using webApi.Models;
 
 namespace webApi.Services.Interfaces
 {
     public interface ITokenService
     {
-        Task<string> GenerateToken(LoginDto loginDto);
+        string GenerateToken(User user);
     }
 }

@@ -4,23 +4,17 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using webApi.Dtos;
 using webApi.Models;
-using webApi.Repository;
 using webApi.Repository.Interfaces;
 using webApi.Services.Interfaces;
 
 namespace webApi.Services
 {
-    public class TokenService(IConfiguration configuration, IUserRepository repository) : ITokenService
+    public class TokenService(IConfiguration configuration) : ITokenService
     {
-        private readonly IUserRepository _repository = repository;
         private readonly IConfiguration _configuration = configuration;
 
-        public async Task<string> GenerateToken(LoginDto loginDto)
+        public string GenerateToken(User user)
         {
-            var userDB = await _repository.GetUserByEmail(loginDto.Email);
-
-            if (loginDto.Email != userDB.Email || loginDto.Password != userDB.Password)
-                return string.Empty;
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"] ?? string.Empty));
             var issuer = _configuration["Jwt:Issuer"];
             var audience = _configuration["Jwt:Audience"];
@@ -32,8 +26,8 @@ namespace webApi.Services
                 audience: audience,
                 claims:
                 [
-                    new Claim(type: ClaimTypes.Name, userDB.Name),
-                    new Claim(type: ClaimTypes.Role, userDB.Role),
+                    new Claim(type: ClaimTypes.Name, user.Name),
+                    new Claim(type: ClaimTypes.Role, user.Role),
                 ],
                 expires: DateTime.Now.AddHours(1),
                 signingCredentials: signinCredentials
