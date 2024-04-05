@@ -1,10 +1,10 @@
 // using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using webApi.Models;
-using webApi.Repository.Interfaces;
+using webApi.Application.Interfaces;
+using webApi.Domain.Entities;
 
-namespace webApi.Controllers
+namespace webApi.Presentation.Controllers
 {
     // [Produces(MediaTypeNames.Application.Json)]
     // Habilita recursos específicos da API, como o binding de parâmetros de rota, query e corpo de forma automática.
@@ -12,10 +12,9 @@ namespace webApi.Controllers
     // Define a rota de acesso ao controlador onde [controller] é um token que será substituído pelo nome do controlador.
     [Route("api/[controller]")]
     // Herdar de ControllerBase proporciona ao UserController acesso a muitos métodos e propriedades úteis para o tratamento de requisições HTTP.
-    public class UserController(IUserRepository repository) : ControllerBase
+    public class UserController(IUserUseCases userUseCases) : ControllerBase
     {
-        // Chama o repositório para utilizar seus métodos
-        private readonly IUserRepository _repository = repository;
+        private readonly IUserUseCases _userUseCases = userUseCases;
 
         // Indica quem tem acesso a rota
         [Authorize(Roles = "manager")]
@@ -27,7 +26,7 @@ namespace webApi.Controllers
 
         public async Task<IActionResult> Get()
         {
-            var usersDB = await _repository.SearchUsers();
+            var usersDB = await _userUseCases.GetUsersAsync();
             return usersDB.Any() ? Ok(usersDB) : NoContent();
         }
 
@@ -39,10 +38,8 @@ namespace webApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(Guid id)
         {
-            var userDB = await _repository.SearchUser(id);
-            return userDB != null
-            ? Ok(userDB)
-            : NotFound("Usuário não encontrado");
+            var userDB = await _userUseCases.GetUserByIdAsync(id);
+            return userDB != null ? Ok(userDB) : NotFound("Usuário não encontrado");
         }
 
         [HttpPost]
@@ -52,8 +49,7 @@ namespace webApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post(User user)
         {
-            _repository.AddUser(user);
-            return await _repository.SaveChangeAsync()
+            return await _userUseCases.CreateUser(user)
             ? Ok("Usuário adicionado com sucesso")
             : BadRequest("Erro ao salvar o usuário");
         }
@@ -67,20 +63,9 @@ namespace webApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Put(Guid id, User user)
         {
-            var userDB = await _repository.SearchUser(id);
-            if (userDB == null) return NotFound("Usuário não encontrado");
-
-            userDB.Name = user.Name ?? userDB.Name;
-            userDB.Email = user.Email ?? userDB.Email;
-            userDB.Password = user.Password ?? userDB.Password;
-            userDB.Role = user.Role ?? userDB.Role;
-            userDB.Active = user.Active == true;
-
-            _repository.UpdateUser(userDB);
-
-            return await _repository.SaveChangeAsync()
-            ? Ok("Usuário atualizado com sucesso")
-            : BadRequest("Erro ao atualizar o usuário");
+            return await _userUseCases.UpdateUser(id, user) ?
+                Ok("Usuário atualizado com sucesso") :
+                BadRequest("Erro ao atualizar o usuário");
         }
 
         [Authorize(Roles = "manager,user")]
@@ -92,12 +77,7 @@ namespace webApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var userDB = await _repository.SearchUser(id);
-            if (userDB == null) return NotFound("Usuário não encontrado");
-
-            _repository.DeleteUser(userDB);
-
-            return await _repository.SaveChangeAsync()
+            return await _userUseCases.DeleteUser(id)
             ? Ok("Usuário deletado com sucesso")
             : BadRequest("Erro ao deletar o usuário");
         }

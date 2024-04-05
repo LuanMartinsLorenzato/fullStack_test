@@ -2,16 +2,19 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using user.Data;
-using webApi.Models;
-using webApi.Repository.Interfaces;
-using webApi.Repository;
-using webApi.Services.Interfaces;
-using webApi.Services;
+using user.Infrastructure.Persistence;
+using webApi.Domain.Entities;
+using webApi.Domain.Repositories;
+using webApi.Domain.Interfaces;
+using webApi.Domain.Validators;
+using webApi.Presentation.Services;
+using webApi.Presentation.Services.Interfaces;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using webApi.Application.Interfaces;
+using webApi.Application.UseCases;
 [assembly: ApiController]
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,6 +69,9 @@ builder.Services.AddDbContext<UserDBContext>(options =>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IUserUseCases, UserUseCases>();
+builder.Services.AddScoped<ILoginUseCase, LoginUseCase>();
+
 builder.Services.AddAuthentication(x =>
     {
         x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

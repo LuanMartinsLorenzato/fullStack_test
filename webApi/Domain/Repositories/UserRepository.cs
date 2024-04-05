@@ -1,19 +1,19 @@
 using Microsoft.EntityFrameworkCore;
-using user.Data;
-using webApi.Models;
-using webApi.Repository.Interfaces;
+using user.Infrastructure.Persistence;
+using webApi.Domain.Entities;
+using webApi.Domain.Interfaces;
 
-namespace webApi.Repository
+namespace webApi.Domain.Repositories
 {
     public class UserRepository(UserDBContext context) : IUserRepository
     {
         private readonly UserDBContext _context = context;
 
-        public async Task<IEnumerable<User>> SearchUsers()
+        public async Task<IEnumerable<User>> GetUsersAsync()
         {
             return await _context.Users.ToListAsync();
         }
-        public async Task<User> SearchUser(Guid id)
+        public async Task<User> GetUserByIdAsync(Guid id)
         {
             // Corrigir implementação para retorno null, caso não ache o email ocorre erro 500 
             var getUser = await _context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
@@ -25,7 +25,7 @@ namespace webApi.Repository
             return getUser;
         }
 
-        public void AddUser(User user)
+        public void CreateUser(User user)
         {
             _context.Add(user);
         }

@@ -1,7 +1,6 @@
-using webApi.Dtos;
-using webApi.Models;
+using webApi.Domain.Entities;
 
-namespace webApi.Services.Interfaces
+namespace webApi.Presentation.Services.Interfaces
 {
     public interface ITokenService
     {

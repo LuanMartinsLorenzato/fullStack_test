@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using webApi.Models;
+using webApi.Domain.Entities;
 
-namespace user.Data
+namespace user.Infrastructure.Persistence
 {
     // Utilizado o construtor primario como descrito na IDEO290  https://learn.microsoft.com/pt-br/dotnet/fundamentals/code-analysis/style-rules/ide0290#example
     public class UserDBContext(DbContextOptions<UserDBContext> options) : DbContext(options)
