@@ -62,7 +62,7 @@ builder.Services.AddFluentValidationClientsideAdapters();
 
 builder.Services.AddTransient<IValidator<User>, UserValidator>();
 
-builder.Services.AddDbContext<UserDBContext>(options =>
+builder.Services.AddDbContext<DBContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default"));
 });

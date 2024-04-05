@@ -5,9 +5,9 @@ using webApi.Domain.Interfaces;
 
 namespace webApi.Domain.Repositories
 {
-    public class UserRepository(UserDBContext context) : IUserRepository
+    public class UserRepository(DBContext context) : IUserRepository
     {
-        private readonly UserDBContext _context = context;
+        private readonly DBContext _context = context;
 
         public async Task<IEnumerable<User>> GetUsersAsync()
         {
