@@ -5,9 +5,9 @@ using webApi.Domain.Interfaces;
 
 namespace webApi.Domain.Repositories
 {
-    public class UserRepository(UserDBContext context) : IUserRepository
+    public class UserRepository(DBContext context) : IUserRepository
     {
-        private readonly UserDBContext _context = context;
+        private readonly DBContext _context = context;
 
         public async Task<IEnumerable<User>> GetUsersAsync()
         {
@@ -15,8 +15,8 @@ namespace webApi.Domain.Repositories
         }
         public async Task<User> GetUserByIdAsync(Guid id)
         {
-            // Corrigir implementação para retorno null, caso não ache o email ocorre erro 500 
-            var getUser = await _context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
+            // Corrigir implementação para retorno null, caso não ache o Id ocorre erro 500 
+            var getUser = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
             // if (getUser == null)
             // {
             //     return null;
@@ -27,17 +27,17 @@ namespace webApi.Domain.Repositories
 
         public void CreateUser(User user)
         {
-            _context.Add(user);
+            _context.Users.Add(user);
         }
 
         public void UpdateUser(User user)
         {
-            _context.Update(user);
+            _context.Users.Update(user);
         }
 
         public void DeleteUser(User user)
         {
-            _context.Remove(user);
+            _context.Users.Remove(user);
         }
 
         public async Task<bool> SaveChangeAsync()

@@ -5,6 +5,7 @@ using webApi.Application.Interfaces;
 
 namespace webApi.Presentation.Controllers
 {
+    [ApiController]
     public class AuthController(ITokenService tokenService, ILoginUseCase loginUseCase) : ControllerBase
     {
         private readonly ITokenService _tokenService = tokenService;

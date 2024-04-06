@@ -35,6 +35,7 @@ namespace webApi.Application.UseCases
             userDB.Password = user.Password ?? userDB.Password;
             userDB.Role = user.Role ?? userDB.Role;
             userDB.Active = user.Active == true;
+            userDB.Movies = user.Movies ?? userDB.Movies;
 
             return await _repository.SaveChangeAsync();
         }
