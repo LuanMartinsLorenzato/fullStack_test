@@ -4,8 +4,8 @@ namespace webApi.Domain.Entities
     {
         public Guid UserId { get; set; }
         public Guid MovieId { get; set; }
-        public required User User { get; set; }
-        public required Movie Movie { get; set; }
+        public User User { get; set; }
+        public Movie Movie { get; set; }
 
     }
 }

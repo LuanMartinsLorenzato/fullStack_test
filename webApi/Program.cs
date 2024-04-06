@@ -15,7 +15,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using webApi.Application.Interfaces;
 using webApi.Application.UseCases;
-[assembly: ApiController]
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -71,6 +70,10 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserUseCases, UserUseCases>();
 builder.Services.AddScoped<ILoginUseCase, LoginUseCase>();
+builder.Services.AddScoped<IMovieUseCase, MovieUseCase>();
+builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+// builder.Services.AddScoped<IUserMovieRepository, UserMovieRepository>();
+// builder.Services.AddScoped<IUserMovieUseCases, UserMovieUseCases>();
 
 builder.Services.AddAuthentication(x =>
     {

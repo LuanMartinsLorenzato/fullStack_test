@@ -24,12 +24,10 @@ namespace user.Infrastructure.Persistence
                     {
                         x.ToTable("tb_movie_user");
                         x.HasKey(k => new { k.UserId, k.MovieId });
-
-                        x.Property(p => p.UserId).IsRequired();
-                        x.Property(p => p.MovieId).IsRequired();
                     }
                 );
             movie.HasKey(x => x.Id);
+            
             user.ToTable("tb_user");
             user.HasKey(x => x.Id);
             user.Property(x => x.Id).ValueGeneratedOnAdd();

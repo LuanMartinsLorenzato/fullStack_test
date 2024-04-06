@@ -9,16 +9,14 @@ namespace webApi.Presentation.Controllers
     // [Produces(MediaTypeNames.Application.Json)]
     // Habilita recursos específicos da API, como o binding de parâmetros de rota, query e corpo de forma automática.
     [ApiController]
-    // Define a rota de acesso ao controlador onde [controller] é um token que será substituído pelo nome do controlador.
-    [Route("api/[controller]")]
     // Herdar de ControllerBase proporciona ao UserController acesso a muitos métodos e propriedades úteis para o tratamento de requisições HTTP.
     public class UserController(IUserUseCases userUseCases) : ControllerBase
     {
         private readonly IUserUseCases _userUseCases = userUseCases;
 
         // Indica quem tem acesso a rota
-        [Authorize(Roles = "manager")]
-        [HttpGet]
+        // [Authorize(Roles = "manager")]
+        [HttpGet("get-users", Name = "get-users")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -30,8 +28,8 @@ namespace webApi.Presentation.Controllers
             return usersDB.Any() ? Ok(usersDB) : NoContent();
         }
 
-        [Authorize(Roles = "manager,user")]
-        [HttpGet("{id}")]
+        // [Authorize(Roles = "manager,user")]
+        [HttpGet("get-user/{id}", Name = "get-user/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -42,7 +40,7 @@ namespace webApi.Presentation.Controllers
             return userDB != null ? Ok(userDB) : NotFound("Usuário não encontrado");
         }
 
-        [HttpPost]
+        [HttpPost("create-user", Name = "create-user")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -55,7 +53,7 @@ namespace webApi.Presentation.Controllers
         }
 
         [Authorize(Roles = "manager,user")]
-        [HttpPut("{id}")]
+        [HttpPut("update-user/{id}", Name = "update-user/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -63,13 +61,13 @@ namespace webApi.Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Put(Guid id, User user)
         {
-            return await _userUseCases.UpdateUser(id, user) ?
-                Ok("Usuário atualizado com sucesso") :
-                BadRequest("Erro ao atualizar o usuário");
+            return await _userUseCases.UpdateUser(id, user)
+            ? Ok("Usuário atualizado com sucesso") 
+            : BadRequest("Erro ao atualizar o usuário");
         }
 
         [Authorize(Roles = "manager,user")]
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}", Name = "delete/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
