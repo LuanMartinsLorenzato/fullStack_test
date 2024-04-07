@@ -10,7 +10,13 @@ namespace webApi.Application.UseCases
         private readonly IUserMovieRepository _repository = repository;
         public async Task<bool> AddMovieOnUser(UserMovieDto userMovieDto)
         {
-            _repository.AddMovieOnUser(userMovieDto);
+            var movieDB = await _repository.CheckExistMovie(userMovieDto.MovieId);
+            if (movieDB == null) return false;
+
+            var userDB = await _repository.CheckExistUser(userMovieDto.UserId);
+            if (userDB == null) return false;
+
+            _repository.AddMovieOnUser(userDB, movieDB);
             return await _repository.SaveChangeAsync();
         }
 
@@ -21,7 +27,13 @@ namespace webApi.Application.UseCases
 
         public async Task<bool> RemoveMovieOnUser(UserMovieDto userMovieDto)
         {
-            _repository.RemoveMovieOnUser(userMovieDto);
+            var movieDB = await _repository.CheckExistMovie(userMovieDto.MovieId);
+            if (movieDB == null) return false;
+
+            var userDB = await _repository.CheckExistUser(userMovieDto.UserId);
+            if (userDB == null) return false;
+
+            _repository.RemoveMovieOnUser(userDB, movieDB);
             return await _repository.SaveChangeAsync();
         }
     }

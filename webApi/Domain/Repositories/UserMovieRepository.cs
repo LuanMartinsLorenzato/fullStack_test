@@ -6,17 +6,30 @@ using webApi.Domain.Interfaces;
 
 namespace webApi.Domain.Repositories
 {
+    // UserRepository é responsavél pela comunicação com o EntityFramework na tabela de relação entre Users e Movies, 
+    // que faz a conexão ao banco de dados.
     public class UserMovieRepository(DBContext context) : IUserMovieRepository
     {
         private readonly DBContext _context = context;
 
-        public void AddMovieOnUser(UserMovieDto userMovieDto)
+        // Pede ao EntityFramework o filme pelo Id.
+        public async Task<Movie?> CheckExistMovie(Guid id)
         {
-            var movie = _context.Movies.FirstOrDefault(x => x.Id == userMovieDto.MovieId);
-            if (movie != null) {
-                var user = _context.Users.Include(u => u.Movies).FirstOrDefault(x => x.Id == userMovieDto.UserId);
-                user?.Movies.Add(movie);
-            }
+            var movie = await _context.Movies.FirstOrDefaultAsync(x => x.Id == id);
+            return movie;
+        }
+
+        // Pede ao EntityFramework o usuário pelo Id.
+        public async Task<User?> CheckExistUser(Guid id)
+        {
+            var user = await _context.Users.Include(u => u.Movies).FirstOrDefaultAsync(x => x.Id == id);
+            return user;
+        }
+
+        // Pede ao EntityFramework para adicionar a relação entre filme e usuário.
+        public void AddMovieOnUser(User user, Movie movie)
+        {
+            user.Movies.Add(movie);
         }
 
         public async Task<IEnumerable<Movie>> GetMoviesOnUser(Guid userId)
@@ -25,14 +38,10 @@ namespace webApi.Domain.Repositories
             return userDB;
         }
 
-        public void RemoveMovieOnUser(UserMovieDto userMovieDto)
+        // Pede ao EntityFramework para retirar a relação entre filme e usuário.
+        public void RemoveMovieOnUser(User user, Movie movie)
         {
-            // Buscas ao banco deveriam sempre ter uma resposta?
-            var movieDB = _context.Movies.FirstOrDefault(x => x.Id == userMovieDto.MovieId);
-            if (movieDB != null) {
-                var userDB = _context.Users.Include(u => u.Movies).FirstOrDefault(x => x.Id == userMovieDto.UserId);
-                userDB?.Movies.Remove(movieDB);
-            }
+            user.Movies.Remove(movie);
         }
 
         public async Task<bool> SaveChangeAsync()
