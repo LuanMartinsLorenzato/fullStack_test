@@ -13,3 +13,9 @@ Conectar ao banco de dados via psql: psql -U postgres -d my_test_db
 Listar tabelas no psql: \dt ou \dt *.* para todos os esquemas
 Sair do psql: \q
 Sair do shell do container: exit
+
+S - A classe está focada em manipular operações relacionadas a filmes e usuários.
+O - Com interfaces separadas mantemos a classe aberta a extensão mas fechada para modificação.
+L - Nenhuma classe é violada ou sobrepõe sua interface.
+I - Separando as interfaces temos melhor segregação de interfaces para utilizar seus métodos.
+D - Um resultado da boa implementação dos outros principios utilizando interfaces fazendo as classes dependerem das interfaces.

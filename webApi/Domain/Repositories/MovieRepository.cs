@@ -5,7 +5,7 @@ using webApi.Domain.Interfaces;
 
 namespace webApi.Domain.Repositories
 {
-    public class MovieRepository(DBContext context) : IMovieRepository
+    public class MovieRepository(DBContext context) : IMovieQueryRepository, IMoviePersistenceRepository
     {
         private readonly DBContext _context = context;
 

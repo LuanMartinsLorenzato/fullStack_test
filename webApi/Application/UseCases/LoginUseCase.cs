@@ -5,12 +5,13 @@ using webApi.Domain.Interfaces;
 
 namespace webApi.Application.UseCases
 {
-    public class LoginUseCase(IUserRepository repository ) : ILoginUseCase
-    {        private readonly IUserRepository _repository = repository;
+    public class LoginUseCase(IUserQueryRepository queryRepository) : ILoginUseCase
+    {
+        private readonly IUserQueryRepository _queryRepository = queryRepository;
 
         public Task<User?> GetUserByEmail(LoginDto loginDto)
         {
-            return _repository.GetUserByEmail(loginDto);
+            return _queryRepository.GetUserByEmail(loginDto);
         }
     }
 }
