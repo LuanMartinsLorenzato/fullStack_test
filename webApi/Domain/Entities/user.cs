@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace webApi.Domain.Entities
 {
     public class User
@@ -8,7 +10,9 @@ namespace webApi.Domain.Entities
         public required string Email { get; set; }
         public required string Password { get; set; }
         public required string Role { get; set; }
-        public required ICollection<Movie> Movies { get; set; }
+
+        [JsonIgnore]
+        public ICollection<Movie> Movies { get; set; } = [];
         public bool Active { get; set; } = true;
     }
 }
