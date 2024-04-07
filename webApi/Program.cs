@@ -72,8 +72,8 @@ builder.Services.AddScoped<IUserUseCases, UserUseCases>();
 builder.Services.AddScoped<ILoginUseCase, LoginUseCase>();
 builder.Services.AddScoped<IMovieUseCase, MovieUseCase>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
-// builder.Services.AddScoped<IUserMovieRepository, UserMovieRepository>();
-// builder.Services.AddScoped<IUserMovieUseCases, UserMovieUseCases>();
+builder.Services.AddScoped<IUserMovieRepository, UserMovieRepository>();
+builder.Services.AddScoped<IUserMovieUseCases, UserMovieUseCases>();
 
 builder.Services.AddAuthentication(x =>
     {

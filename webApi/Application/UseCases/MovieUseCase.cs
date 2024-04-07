@@ -10,16 +10,9 @@ namespace webApi.Application.UseCases
 
         public async Task<bool> CreateMovie(Movie movie)
         {
-            var hasMovie = await _repository.GetMovieByTitle(movie.Title);
+            var hasMovie = await _repository.GetMovieById(movie.Id);
             if (hasMovie == null) _repository.CreateMovie(movie);
             return await _repository.SaveChangeAsync();
-        }
-
-        public async Task<bool> AddMovieToUser(Guid movieId, Guid userId)
-        {
-            await _repository.AddMovieToUser(movieId, userId);
-            var saved = await _repository.SaveChangeAsync();
-            return saved;
         }
 
         public async Task<IEnumerable<Movie>> GetMoviesAsync()
