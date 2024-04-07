@@ -6,7 +6,7 @@ using webApi.Domain.Interfaces;
 
 namespace webApi.Domain.Repositories
 {
-    // UserRepository é responsavél pela comunicação com o  EntityFramework que faz a conexão ao banco de dados.
+    // UserRepository é responsavél pela comunicação com o EntityFramework na tabela de Users que faz a conexão ao banco de dados.
     // Utilizamos _context para transmitir essa conversa atráves de querys que o EntityFramework gera com os métodos chamados. 
     public class UserRepository(DBContext context) : IUserRepository
     {
