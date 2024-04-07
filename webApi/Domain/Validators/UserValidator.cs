@@ -18,10 +18,6 @@ namespace webApi.Domain.Validators
             RuleFor(x => x.Password)
             .NotEmpty()
             .WithMessage("Campo obrigatório: Senha");
-
-            RuleFor(x => x.Role)
-            .NotEmpty()
-            .WithMessage("Campo obrigatório: Role");
         }
 
     }

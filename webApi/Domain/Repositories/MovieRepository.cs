@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using user.Infrastructure.Persistence;
 using webApi.Domain.Entities;
@@ -9,25 +10,22 @@ namespace webApi.Domain.Repositories
     {
         private readonly DBContext _context = context;
 
-        public async Task<Movie?> GetMovieById(Guid id)
+        public async Task<IEnumerable<Movie>?> GetMovies()
         {
-            var getMovie = await _context.Movies.FirstOrDefaultAsync(x => x.Id == id);
-            return getMovie;
+            return await _context.Movies.ToListAsync();
         }
 
-        public void CreateMovie(Movie movie)
+        public void CreateMovies(IEnumerable<Movie> movies)
         {
-            _context.Movies.Add(movie);
+            foreach (var movie in movies)
+            {
+                _context.Movies.Add(movie);
+            }
         }
 
         public async Task<IEnumerable<Movie>> GetMoviesAsync()
         {
             return await _context.Movies.ToListAsync();
-        }
-
-        public void DeleteMovie(Movie movie)
-        {
-            _context.Movies.Remove(movie);
         }
 
         public async Task<bool> SaveChangeAsync()

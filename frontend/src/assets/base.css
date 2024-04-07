@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+
+}
+
+*,
+*::before,
+*::after {
+  @apply h-full m-0;
+}

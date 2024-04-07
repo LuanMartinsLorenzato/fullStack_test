@@ -18,6 +18,16 @@ using webApi.Application.UseCases;
 // Criamos a instância inicial da aplicação.
 var builder = WebApplication.CreateBuilder(args);
 
+var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
+
+builder.Services.AddCors(options => 
+{
+    options.AddPolicy("myCors", policy => 
+    {
+        policy.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
 // Configura a aplicação para oferecer informações sobre a API.
 builder.Services.AddEndpointsApiExplorer();
 
@@ -121,6 +131,8 @@ if (app.Environment.IsDevelopment())
 }
 // Adiciona o middleware de redirecionamento HTTPS para mais segurança.
 app.UseHttpsRedirection();
+
+app.UseCors("myCors");
 
 // Adiciona o middleware de autenticação à pipeline de solicitação da aplicação.
 app.UseAuthentication();

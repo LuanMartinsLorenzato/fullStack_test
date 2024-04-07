@@ -18,13 +18,13 @@ namespace webApi.Domain.Validators
             .NotEmpty()
             .WithMessage("Campo obrigatório: Poster");
 
-            RuleFor(x => x.Released)
+            RuleFor(x => x.Year)
             .NotEmpty()
-            .WithMessage("Campo obrigatório: Lançamento");
+            .WithMessage("Campo obrigatório: Ano");
 
-            RuleFor(x => x.Runtime)
+            RuleFor(x => x.Type)
             .NotEmpty()
-            .WithMessage("Campo obrigatório: Duração");
+            .WithMessage("Campo obrigatório: Tipo");
         }
     }
 }
