@@ -3,14 +3,17 @@ using webApi.Domain.Entities;
 
 namespace webApi.Domain.Interfaces
 {
-    public interface IUserMovieRepository
+    public interface IUserMovieQueryRepository
     {
-        void AddMovieOnUser(User user, Movie movie);
-        void RemoveMovieOnUser(User user, Movie movie);
         Task<Movie?> CheckExistMovie(Guid id);
         Task<User?> CheckExistUser(Guid id);
         Task<IEnumerable<Movie>> GetMoviesOnUser(Guid userId);
-
+    }
+    
+    public interface IUserMoviePersistenceRepository
+    {
+        void AddMovieOnUser(User user, Movie movie);
+        void RemoveMovieOnUser(User user, Movie movie);
         Task<bool> SaveChangeAsync();
     }
 }

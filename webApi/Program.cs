@@ -1,6 +1,5 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using user.Infrastructure.Persistence;
 using webApi.Domain.Entities;
@@ -15,11 +14,14 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using webApi.Application.Interfaces;
 using webApi.Application.UseCases;
+
+// Criamos a instância inicial da aplicação.
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Configura a aplicação para oferecer informações sobre a API.
 builder.Services.AddEndpointsApiExplorer();
+
+// Configura o Swagger e sua documentação.
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo()
@@ -55,26 +57,40 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// Adiciona suporte a controladores para lidar com HTTP.
 builder.Services.AddControllers();
+
+// Adiciona suporte a FluentValidation para lidar com validações de entidades.
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
 
+// Configura os validadores
 builder.Services.AddTransient<IValidator<User>, UserValidator>();
+builder.Services.AddTransient<IValidator<Movie>, MovieValidator>();
 
+// Adiciona a configuração e o suporte ao banco de dados pelo EntityFramework, nesse caso o postgres.
 builder.Services.AddDbContext<DBContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default"));
 });
 
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+// Configura a aplicação para utilizar interfaces injetando em outros componentes.
+builder.Services.AddScoped<IUserQueryRepository, UserRepository>();
+builder.Services.AddScoped<IUserPersistenceRepository, UserRepository>();
+
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserUseCases, UserUseCases>();
 builder.Services.AddScoped<ILoginUseCase, LoginUseCase>();
 builder.Services.AddScoped<IMovieUseCase, MovieUseCase>();
-builder.Services.AddScoped<IMovieRepository, MovieRepository>();
-builder.Services.AddScoped<IUserMovieRepository, UserMovieRepository>();
+
+builder.Services.AddScoped<IMovieQueryRepository, MovieRepository>();
+builder.Services.AddScoped<IMoviePersistenceRepository, MovieRepository>();
+
+builder.Services.AddScoped<IUserMovieQueryRepository, UserMovieRepository>();
+builder.Services.AddScoped<IUserMoviePersistenceRepository, UserMovieRepository>();
 builder.Services.AddScoped<IUserMovieUseCases, UserMovieUseCases>();
 
+// Configura a aplicação para suporte a autenticação no caso JWT.
 builder.Services.AddAuthentication(x =>
     {
         x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -93,21 +109,27 @@ builder.Services.AddAuthentication(x =>
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? string.Empty)),
         };
     });
+
+// Chamada para contruir a aplicação com base nas configurações.
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Verifica se a aplicação está rodando no ambiente de desenvolvimento e se estiver configura o Swagger.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+// Adiciona o middleware de redirecionamento HTTPS para mais segurança.
 app.UseHttpsRedirection();
 
+// Adiciona o middleware de autenticação à pipeline de solicitação da aplicação.
 app.UseAuthentication();
 
+// Garante que a autorização seja aplicada a todas as solicitações autenticadas recebidas pela aplicação.
 app.UseAuthorization();
 
+// Adiciona roteamento para os controladores.
 app.MapControllers();
 
+// Finalizar a definição da pipeline de solicitação e iniciar o processamento de solicitações HTTP.
 app.Run();
