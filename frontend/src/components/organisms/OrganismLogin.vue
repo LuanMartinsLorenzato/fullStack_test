@@ -7,8 +7,12 @@
       <AtomLink>Forgot password</AtomLink> -->
     </template>
     <template #buttons>
-      <MoleculeButton @action="registerForm">Cadastre-se</MoleculeButton>
-      <MoleculeButton type="submit">Entrar</MoleculeButton>
+      <MoleculeButton @action="registerForm">
+        <template #span>Cadastre-se</template>
+      </MoleculeButton>
+      <MoleculeButton type="submit">
+        <template #span>Entrar</template>
+      </MoleculeButton>
     </template>
   </OrganismForm>
 </template>
@@ -22,19 +26,21 @@ import type { FormDataInterface } from '@/utils/types'
 import { ref } from 'vue'
 import { store } from '@/stores/store'
 const state = store()
-const formData = ref<FormDataInterface>({});
+const formData = ref<FormDataInterface>({})
 
 const updateFormData = ([value, key]: string) => {
   formData.value[key.toLocaleLowerCase()] = value
 }
-const emit = defineEmits(['action', 'login']);
+const emit = defineEmits(['action', 'login'])
 
-const registerForm = () => emit('action');
+const registerForm = () => emit('action')
 
 const submitForm = () => {
   state
     .userLogin(formData.value)
-    .then(() => {emit('login')})
+    .then(() => {
+      emit('login')
+    })
     .catch((error) => console.log(error))
 }
 </script>

@@ -28,20 +28,6 @@ namespace webApi.Presentation.Controllers
             : BadRequest("Erro ao relacionar filme ao usuário");
         }
 
-        [HttpGet("/get-movies-user", Name = "add-movies-user")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetMoviesOnUser(Guid userId)
-        {
-            var moviesDB = await _userMovieUseCase.GetMoviesOnUser(userId);
-            return moviesDB.Any()
-            ? Ok(moviesDB)
-            : NotFound("Nenhum filme associado ao usuário");
-        }
-
         [HttpPut("/remove-movie-user", Name = "remove-movie-user")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

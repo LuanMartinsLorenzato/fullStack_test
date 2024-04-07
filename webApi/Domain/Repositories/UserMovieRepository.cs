@@ -32,13 +32,6 @@ namespace webApi.Domain.Repositories
             user.Movies.Add(movie);
         }
 
-        // Pede ao EntityFramework para pegar todos os filmes relacionados ao usuário.
-        public async Task<IEnumerable<Movie>> GetMoviesOnUser(Guid userId)
-        {
-            var userDB = await _context.Users.Where(u => u.Id == userId).SelectMany(m => m.Movies).ToListAsync();
-            return userDB;
-        }
-
         // Pede ao EntityFramework para retirar a relação entre filme e usuário.
         public void RemoveMovieOnUser(User user, Movie movie)
         {
