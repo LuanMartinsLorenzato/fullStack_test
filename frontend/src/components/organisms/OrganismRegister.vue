@@ -6,8 +6,8 @@
       <MoleculeInput label="Senha" inputType="password" @action="updateFormData" required />
     </template>
     <template #buttons>
-      <MoleculeButton @action="handleRegister">Voltar</MoleculeButton>
-      <MoleculeButton type="submit">Salvar</MoleculeButton>
+      <MoleculeButton @action="handleRegister"><template #span>Voltar</template></MoleculeButton>
+      <MoleculeButton type="submit"><template #span>Salvar</template></MoleculeButton>
     </template>
   </OrganismForm>
 </template>
