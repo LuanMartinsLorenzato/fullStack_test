@@ -7,7 +7,6 @@ namespace webApi.Domain.Interfaces
     {
         Task<Movie?> CheckExistMovie(Guid id);
         Task<User?> CheckExistUser(Guid id);
-        Task<IEnumerable<Movie>> GetMoviesOnUser(Guid userId);
     }
     
     public interface IUserMoviePersistenceRepository

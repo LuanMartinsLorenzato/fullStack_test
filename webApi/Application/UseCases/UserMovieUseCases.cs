@@ -21,11 +21,6 @@ namespace webApi.Application.UseCases
             return await _persistenceRepository.SaveChangeAsync();
         }
 
-        public async Task<IEnumerable<Movie>> GetMoviesOnUser(Guid userId)
-        {
-            return await _queryRepository.GetMoviesOnUser(userId);
-        }
-
         public async Task<bool> RemoveMovieOnUser(UserMovieDto userMovieDto)
         {
             var movieDB = await CheckExistingMovie(userMovieDto.MovieId);

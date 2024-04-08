@@ -9,9 +9,7 @@ namespace webApi.Domain.Entities
         public required string Name { get; set; }
         public required string Email { get; set; }
         public required string Password { get; set; }
-        public required string Role { get; set; }
-
-        [JsonIgnore]
+        public string Role { get; set; } = "user";
         public ICollection<Movie> Movies { get; set; } = [];
         public bool Active { get; set; } = true;
     }

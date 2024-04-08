@@ -1,4 +1,7 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using webApi.Application.Interfaces;
+using webApi.Domain.Dtos;
 using webApi.Domain.Entities;
 using webApi.Domain.Interfaces;
 
@@ -9,10 +12,14 @@ namespace webApi.Application.UseCases
         private readonly IMovieQueryRepository _queryRepository = queryRepository;
         private readonly IMoviePersistenceRepository _moviePersistence = moviePersistence;
 
-        public async Task<bool> CreateMovie(Movie movie)
+        public async Task<bool> CreateMovies()
         {
-            var hasMovie = await CheckExistMovie(movie.Id);
-            if (hasMovie == null) _moviePersistence.CreateMovie(movie);
+            var hasMovie = await CheckExistMovies();
+            if (!hasMovie.Any())
+            {
+                var movies = await GetMoviesInAPI();
+                if (movies != null) _moviePersistence.CreateMovies(movies);
+            }
             return await _moviePersistence.SaveChangeAsync();
         }
 
@@ -21,20 +28,19 @@ namespace webApi.Application.UseCases
             return await _queryRepository.GetMoviesAsync();
         }
 
-        public async Task<bool> DeleteMovie(Guid id)
+        private async Task<IEnumerable<Movie>?> CheckExistMovies()
         {
-            var movieDB = await CheckExistMovie(id);
-            if (movieDB == null) return false;
-
-            _moviePersistence.DeleteMovie(movieDB);
-
-            return await _moviePersistence.SaveChangeAsync();
+            return await _queryRepository.GetMovies();
         }
-
-
-        private async Task<Movie?> CheckExistMovie(Guid id)
+        private static async Task<IEnumerable<Movie>?> GetMoviesInAPI()
         {
-            return await _queryRepository.GetMovieById(id);
+            var request = new HttpRequestMessage(HttpMethod.Get, $"http://www.omdbapi.com/?apikey=4d56cda3&s=Batman&type=movie");
+
+            using var client = new HttpClient();
+            var responseOMDB = await client.SendAsync(request);
+            var contentResp = await responseOMDB.Content.ReadAsStringAsync();
+            var objResp = JsonSerializer.Deserialize<SearchResultDto>(contentResp);
+            return objResp?.Search;
         }
     }
 }

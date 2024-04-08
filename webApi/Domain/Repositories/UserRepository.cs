@@ -52,7 +52,7 @@ namespace webApi.Domain.Repositories
         // Pede para o EntityFramework trazer o primeiro usuário da tabela de Users pelo Email.
         public async Task<User?> GetUserByEmail(LoginDto loginDto)
         {
-            return await _context.Users.FirstOrDefaultAsync(x => x.Email == loginDto.Email);
+            return await _context.Users.Include(x => x.Movies).FirstOrDefaultAsync(x => x.Email == loginDto.Email);
         }
     }
 }

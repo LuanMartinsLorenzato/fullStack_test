@@ -4,14 +4,13 @@ namespace webApi.Domain.Interfaces
 {
     public interface IMoviePersistenceRepository
     {
-        void CreateMovie(Movie movie);
+        void CreateMovies(IEnumerable<Movie> movies);
         Task<bool> SaveChangeAsync();
-        void DeleteMovie(Movie movie);
     }
 
-        public interface IMovieQueryRepository
+    public interface IMovieQueryRepository
     {
         Task<IEnumerable<Movie>> GetMoviesAsync();
-        Task<Movie?> GetMovieById(Guid id);
+        Task<IEnumerable<Movie>?> GetMovies();
     }
 }

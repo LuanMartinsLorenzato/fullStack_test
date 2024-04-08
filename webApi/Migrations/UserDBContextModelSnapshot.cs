@@ -44,20 +44,20 @@ namespace webApi.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Poster")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Released")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Runtime")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasAnnotation("Relational:JsonPropertyName", "Poster");
 
                     b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasAnnotation("Relational:JsonPropertyName", "Title");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("text")
+                        .HasAnnotation("Relational:JsonPropertyName", "Type");
+
+                    b.Property<string>("Year")
+                        .HasColumnType("text")
+                        .HasAnnotation("Relational:JsonPropertyName", "Year");
 
                     b.HasKey("Id");
 

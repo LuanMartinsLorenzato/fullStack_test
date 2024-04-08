@@ -8,9 +8,17 @@ namespace webApi.Domain.Entities
 
         [JsonIgnore]
         public List<User> Users { get; set; } = [];
-        public required string Title { get; set; }
-        public required string Runtime { get; set; }
-        public required string Released { get; set; }
-        public required string Poster { get; set; }
+
+        [JsonPropertyName("Title")]
+        public string? Title { get; set; }
+
+        [JsonPropertyName("Type")]
+        public string? Type { get; set; }
+
+        [JsonPropertyName("Year")]
+        public string? Year { get; set; }
+
+        [JsonPropertyName("Poster")]
+        public string? Poster { get; set; }
     }
 }

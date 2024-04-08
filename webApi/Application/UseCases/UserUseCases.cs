@@ -1,3 +1,4 @@
+using Microsoft.IdentityModel.Tokens;
 using webApi.Application.Interfaces;
 using webApi.Domain.Entities;
 using webApi.Domain.Interfaces;
@@ -14,6 +15,7 @@ namespace webApi.Application.UseCases
         // Pede para o repositório criar o usuário e salvar as alterações no banco.
         public async Task<bool> CreateUser(User user)
         {
+            if(user.Role.IsNullOrEmpty()) user.Role = "user";
             _persistenceRepository.CreateUser(user);
             return await _persistenceRepository.SaveChangeAsync();
         }
@@ -42,7 +44,7 @@ namespace webApi.Application.UseCases
             userDB.Name = user.Name ?? userDB.Name;
             userDB.Email = user.Email ?? userDB.Email;
             userDB.Password = user.Password ?? userDB.Password;
-            userDB.Role = user.Role ?? userDB.Role;
+            userDB.Role = user.Role != userDB.Role ? user.Role : userDB.Role;
             userDB.Active = user.Active == true;
             userDB.Movies = user.Movies ?? userDB.Movies;
 
