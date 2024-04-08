@@ -9,9 +9,7 @@ import OrganismLogin from '@/components/organisms/OrganismLogin.vue';
 import OrganismRegister from '@/components/organisms/OrganismRegister.vue';
 import { ref } from 'vue';
 import router from '../router/index'
-
 const isActiveRegister = ref<boolean>(false);
-
 const goToApp = () => router.replace('/movies');
 const handleOrganism = () => isActiveRegister.value = !isActiveRegister.value;
 </script>

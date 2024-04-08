@@ -1,32 +1,40 @@
-import type { FormDataInterface } from '@/utils/types';
+import type { FormDataInterface, LoginResponse } from '@/utils/types'
 import { defineStore } from 'pinia'
-import { state } from './state';
-import axios from 'axios';
+import { state } from './state'
+import { userServices } from '@/services/UserServices'
+import route from '../router/index'
+import { filmsServices } from '@/services/FilmsServices'
 
 export const store = defineStore('user', {
-  state: () => (state),
+  state: () => state,
   getters: {
     getUser: (state) => {
       console.log(state.user)
       return state.user
     },
-    getToken: (state) => state.token,
+    getToken: (state) => state.token
   },
   actions: {
     async userLogin(data: FormDataInterface): Promise<void> {
-      const urlApi = import.meta.env.VITE_ENV_API_URL;
-      try {
-        const result = await axios.post(`${urlApi}/login`, {
-          email: data.email,
-          password: data.senha
-        })
-        this.user = result.data.user;
-        this.token = result.data.token;
-      } catch (e) {
-        console.log(e)
-        const err: Error = e as Error
-        throw err
-      }
+      const resultdata = await userServices.userLogin(data) as LoginResponse
+      localStorage.setItem('Token', resultdata.token)
+      this.user = resultdata.user
+      this.token = resultdata.token
+      await filmsServices.populateDB();
     },
-  },
+
+    async userAutoLogin(): Promise<void> {
+      const token = localStorage.getItem('Token')
+      if (!token) return;
+      await filmsServices.populateDB();
+      const credentials = userServices.getCredentials(token);
+      if (!credentials) return;
+      const resultdata = await userServices.userLogin(credentials) as LoginResponse;
+      if (!resultdata) return;
+      localStorage.setItem('Token', resultdata.token)
+      this.user = resultdata.user
+      this.token = resultdata.token
+      route.push('/movies');
+    }
+  }
 })

@@ -19,6 +19,16 @@ class FilmsServices {
       throw err;
     };
   }
+
+  
+  async populateDB(): Promise<void> {
+    try {
+      await api().post("/create-movies");
+    } catch (e) {
+      const err: Error = e as Error;
+      throw err;
+    };
+  }
 }
 
 export const filmsServices = new FilmsServices()

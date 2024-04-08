@@ -1,5 +1,5 @@
 export type StyleSpan = 'Text' | 'Input'
-export type InputType = 'email' | 'text' | 'password' | 'number'
+export type InputType = 'email' | 'text' | 'password' | 'number' | 'radio'
 export type MaskTypes = 'phone' | 'cpf' | 'cep'
 export interface PropsAtomSpan {
   styleType?: StyleSpan
@@ -22,6 +22,11 @@ export type UserType = {
   role: string
 }
 
+export type LoginResponse = {
+  user: UserType;
+  token: string;
+}
+
 export interface AtomImgProps {
   src: string
   alt: string
@@ -29,10 +34,10 @@ export interface AtomImgProps {
 
 export type FilmsDataType = {
   id: string
-  runtime: string
-  poster: string
-  title: string
-  released: string
+  Runtime: string
+  Poster: string
+  Title: string
+  Released: string
 }
 
 export interface MaskObject {
@@ -71,4 +76,6 @@ export interface FormDataInterface {
   city?: string
   neighborhood?: string
   uf?: string
+  active?: boolean
+  role?: string
 }

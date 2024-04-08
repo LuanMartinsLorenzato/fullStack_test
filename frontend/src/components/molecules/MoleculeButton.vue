@@ -1,7 +1,5 @@
 <template>
   <button class="ContainerButton" @click="action">
-    <slot name="icon"></slot>
-
     <AtomSpan styleType="Text">
       <slot name="span">
       </slot>
