@@ -28,7 +28,9 @@ namespace webApi.Presentation.Services
                 audience: audience,
                 claims:
                 [
-                    new Claim(type: ClaimTypes.Name, user.Name),
+                    // Estou utilizando no Front para manter o login, não é a prática correta.
+                    new Claim(type: "email", user.Email),
+                    new Claim(type: "password", user.Password),
                     new Claim(type: ClaimTypes.Role, user.Role),
                 ],
                 expires: DateTime.Now.AddHours(1),

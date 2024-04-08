@@ -28,12 +28,11 @@ namespace webApi.Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post()
         {
             return await _movieUseCase.CreateMovies()
             ? Ok("Filmes salvos com sucesso")
-            : BadRequest("Erro ao salvar os filmes");
+            : Ok("Filmes já foram salvos");
         }
     };
 }
