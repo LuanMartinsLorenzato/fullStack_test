@@ -1,11 +1,43 @@
-## Iniciar a aplicação
+## FullSTACK_TEST
 
-# Comandos
+# Bibliotecas e frameworks utilizados.
+- Microsoft.EntityFrameworkCore.Design
+- FluentValidation.AspNetCore
+- FluentValidation.DependencyInjectionExtensions
+- Microsoft.AspNetCore.Authentication.JwtBearer
+- Microsoft.AspNetCore.OpenApi
+- Microsoft.EntityFrameworkCore
+- Microsoft.EntityFrameworkCore.Design
+- Microsoft.EntityFrameworkCore.Tools
+- Microsoft.IdentityModel.Tokens
+- Npgsql.EntityFrameworkCore.PostgreSQL
+- Swashbuckle.AspNetCore
+- System.IdentityModel.Tokens.Jwt
+- Vue 3
+- Typescript
+- Vitest
+- Vite
+- Axios
+- jwt-decode
+- pinia
+- Tailwind
 
-- docker-compose up -d
+# Iniciar a aplicação.
+
+# Comandos.
+- cd .\webApi
+- docker-compose up -d 
+- dotnet add package Microsoft.EntityFrameworkCore.Design
+- dotnet tool install --global dotnet-ef
 - dotnet ef database update
+- dotnet build
+- dotnet run
+- cd .\frontend
+- npm i
+- npm run dev
 
-## Comandos para verificar as tabelas
+
+## Comandos para verificar as tabelas.
 
 Listar containers rodando: docker ps
 Acessar o shell do container: docker exec -it webapi-postgres-1 bash
@@ -14,8 +46,9 @@ Listar tabelas no psql: \dt ou \dt *.* para todos os esquemas
 Sair do psql: \q
 Sair do shell do container: exit
 
-S - A classe está focada em manipular operações relacionadas a filmes e usuários.
-O - Com interfaces separadas mantemos a classe aberta a extensão mas fechada para modificação.
+## Para o desenvolvimento segui os principios SOLID.
+S - Classes focadas em manipular operações unicas.
+O - Interfaces separadas mantemos as classes aberta a extensão mas fechada para modificação.
 L - Nenhuma classe é violada ou sobrepõe sua interface.
 I - Separando as interfaces temos melhor segregação de interfaces para utilizar seus métodos.
-D - Um resultado da boa implementação dos outros principios utilizando interfaces fazendo as classes dependerem das interfaces.
+D - Um resultado da boa implementação dos outros principios utilizando interfaces.
